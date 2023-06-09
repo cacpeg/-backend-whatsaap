@@ -10,7 +10,7 @@ async function main() {
   const app = express()
 
   const from = '110984281875094';
-  const token = 'EAALZCEgWBWH8BAEW7b6SlElQkZB1bLI3tEX7ORLXl0qJiZAflxT5IGZAm0HoVly7sxAKJP0LDJCFqjUNhFVq486cM92OvxnULVoLjqaS876GGvRT849gqOPnnNBXo9062SP7pKuG8ewECXN9NeZC9HCaQg0R9ZAFldHJAJ4ZAosmhddWasZAlY08mG4HTfYlEuNZA0caxRn9rZCNRYvCqTN4FYABxkQYqLVWgZD';
+  const token = 'EAALZCEgWBWH8BAKLOIaXuMfV2004iBXFO9bxGVSkyYBm51nhwKPxwzLuLY39q2V3wGd9TWb2ZAqeFgBN3rUoLQAYSovsuAheSv0m1bf4F8nMqOKJjntI4jYHgUZCS0dZAb00ZCIJ6YY04pBw4FvxCZBj9M3zpCuhZA2ZAp0dBdtP6tUWxNAZBPplwC5eUiZCa7lyhnC49RgC76OIpx5UdCaR498hvZABxlcrE4ZD';
 
   const webhookVerifyToken = 'Cacpeg2023!';
 
@@ -24,8 +24,13 @@ async function main() {
     useMiddleware: (app) => {
       app.use(cors()),
         app.post("/apis", async (req, res) => {
+        try {
           let { mensaje, from } = req.body
           await bot.sendText(from, mensaje);
+          return res.json({"ok":true})
+        } catch (error) {
+          return res.json({"ok":false,"error":error})
+        }
         })
       app.get("/apis/consul", async (req, res) => {
         return res.send("Is Running")
