@@ -3,17 +3,17 @@ import cors from 'cors';
 import express from 'express';
 // or if using require:
 // const { createBot } = require('whatsapp-cloud-api');
-const bot = createBot();
-
-const app = express()
 
 
-import { createBot } from 'whatsapp-cloud-api';
+
+
+
 // or if using require:
 // const { createBot } = require('whatsapp-cloud-api');
 
 (async () => {
   try {
+    const app = express()
     // replace the values below
     const from = '110984281875094';
     const token = 'EAALZCEgWBWH8BABlJmmB58E3ottmLuku988wqjFAak63dJdZAfKwYZBzJH2xoDPJ8UpSxQcCLd9HRCVb7QkE6lrYrW5jBH9cgZB1ZAFBwoExXcZAHZAxDIAifuh1LzvF0r0dUw9ibGIYMtdG5AoedZCzYzZBVkZCM7mneQTY2UT0yEi64zHrsbnr1e56YIyM7RBQEY6q7guEEO9JcV40ckEbZAl1lDpA4S4EsoZD';
