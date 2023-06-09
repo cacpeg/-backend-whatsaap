@@ -71,8 +71,8 @@ async function main() {
           name: msg.name,
           timestamp: date.toISOString(),
           type: msg.type,
-          UsuarioId: user.id,
-          conversacionId: conversacion.id,
+          usuario: { connect: { id: user.id } },
+          conversacion: { connect: { id: conversacion.id } },
 
         }
       })
