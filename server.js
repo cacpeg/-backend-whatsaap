@@ -10,7 +10,7 @@ async function main() {
   const app = express()
 
   const from = '110984281875094';
-  const token = 'EAALZCEgWBWH8BAKLOIaXuMfV2004iBXFO9bxGVSkyYBm51nhwKPxwzLuLY39q2V3wGd9TWb2ZAqeFgBN3rUoLQAYSovsuAheSv0m1bf4F8nMqOKJjntI4jYHgUZCS0dZAb00ZCIJ6YY04pBw4FvxCZBj9M3zpCuhZA2ZAp0dBdtP6tUWxNAZBPplwC5eUiZCa7lyhnC49RgC76OIpx5UdCaR498hvZABxlcrE4ZD';
+  const token = process.env.KEY;
 
   const webhookVerifyToken = 'Cacpeg2023!';
 
