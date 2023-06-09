@@ -6,13 +6,15 @@ import express from 'express';
 
 
 
+import {  PrismaClient } from '@prisma/client'
+
 
 
 
 (async () => {
   try {
     const app = express()
-
+    const prisma = new PrismaClient()
     const from = '110984281875094';
     const token = 'EAALZCEgWBWH8BABlJmmB58E3ottmLuku988wqjFAak63dJdZAfKwYZBzJH2xoDPJ8UpSxQcCLd9HRCVb7QkE6lrYrW5jBH9cgZB1ZAFBwoExXcZAHZAxDIAifuh1LzvF0r0dUw9ibGIYMtdG5AoedZCzYzZBVkZCM7mneQTY2UT0yEi64zHrsbnr1e56YIyM7RBQEY6q7guEEO9JcV40ckEbZAl1lDpA4S4EsoZD';
 
