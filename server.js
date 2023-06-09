@@ -23,44 +23,53 @@ async function main() {
     webhookPath: `/custom/webhook`,
     useMiddleware: (app) => {
       app.use(cors()),
-        app.get("/apis", async (req, res) => {
+        app.post("/apis", async (req, res) => {
           let { mensaje, from } = req.body
           await bot.sendText(from, mensaje);
         })
+      app.get("/apis/consul", async (req, res) => {
+        return res.send("Is Running")
+      })
     },
   });
 
   bot.on('message', async (msg) => {
     console.log(msg);
     const date = new Date();
-    date.setTime(msg.timestamp * 1000);
-    const user = await prisma.usuario.upsert({
-      where: { telefono: msg.from },
-      update: {},
-      create: {
-        nombre: msg.name,
-        telefono: msg.from
-      },
-    })
+    try {
 
-    const conversacion = await prisma.listConversacion.upsert({
-      where: { id:  `${date.toLocaleDateString()+user.id}` },
-      update: {},
-      create: {
-        id:  `${date.toLocaleDateString()+user.id}`,
-        llave: date.toLocaleDateString(),
-        UsuarioId: user.id
-      },
-    })
 
-  
+      date.setTime(msg.timestamp * 1000);
+      const user = await prisma.usuario.upsert({
+        where: { telefono: msg.from },
+        update: {},
+        create: {
+          nombre: msg.name,
+          telefono: msg.from
+        },
+      })
 
-    console.log(date.toISOString()); // Imprime la fecha en formato ISO
-    console.log(date.toLocaleDateString());
-    if (msg.type === 'text') {
-      await bot.sendText(msg.from, 'Received your text message!');
-    } else if (msg.type === 'image') {
-      await bot.sendText(msg.from, 'Received your image!');
+      const conversacion = await prisma.listConversacion.upsert({
+        where: { id: `${date.toLocaleDateString() + user.id}` },
+        update: {},
+        create: {
+          id: `${date.toLocaleDateString() + user.id}`,
+          llave: date.toLocaleDateString(),
+          UsuarioId: user.id
+        },
+      })
+
+
+
+      console.log(date.toISOString()); // Imprime la fecha en formato ISO
+      console.log(date.toLocaleDateString());
+      if (msg.type === 'text') {
+        await bot.sendText(msg.from, 'Received your text message!');
+      } else if (msg.type === 'image') {
+        await bot.sendText(msg.from, 'Received your image!');
+      }
+    } catch (error) {
+      console.error('Error recibe mensaje:', error);
     }
   });
 }
