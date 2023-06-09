@@ -24,13 +24,13 @@ async function main() {
     useMiddleware: (app) => {
       app.use(cors()),
         app.post("/apis", async (req, res) => {
-        try {
-          let { mensaje, from } = req.body
-          await bot.sendText(from, mensaje);
-          return res.json({"ok":true})
-        } catch (error) {
-          return res.json({"ok":false,"error":error})
-        }
+          try {
+            let { mensaje, from } = req.body
+            await bot.sendText(from, mensaje);
+            return res.json({ "ok": true })
+          } catch (error) {
+            return res.json({ "ok": false, "error": error })
+          }
         })
       app.get("/apis/consul", async (req, res) => {
         return res.send("Is Running")
@@ -45,6 +45,7 @@ async function main() {
 
 
       date.setTime(msg.timestamp * 1000);
+      date.setHours(date.getHours() - 5);
       const user = await prisma.usuario.upsert({
         where: { telefono: msg.from },
         update: {},
@@ -62,6 +63,25 @@ async function main() {
           llave: date.toLocaleDateString(),
           UsuarioId: user.id
         },
+      })
+
+      const message = await prisma.message.create({
+        data: {
+          from: msg.from,
+          name: msg.name,
+          timestamp: date.toISOString(),
+          type: msg.type,
+          UsuarioId: user.id,
+          conversacionId: conversacion.id,
+
+        }
+      })
+
+      const data = await prisma.data.create({
+        data: {
+          text: msg.data.text,
+          messageId: message.id
+        }
       })
 
 
