@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgres"
+  url      = "postgres://cacpegwhatsapp:kr5KlbUdbcv9eJ2VXH3JL4upgdgR5YG2@dpg-ci14rkm7avjfjakqcdo0-a.oregon-postgres.render.com/whtasapp_cacpeg"
+}
+
+model Usuario {
+  id           String             @id @default(cuid())
+  nombre       String
+  telefono     String             @unique
+  conversacion ListConversacion[] @relation("ConversationUsuario")
+  mensajes     Message[]          @relation("MensajeUsuario")
+}
+
+model Message {
+  id             String           @id @default(cuid())
+  from           String
+  name           String
+  timestamp      String
+  type           String
+  Image          Image?
+  Data           Data?
+  usuario        Usuario          @relation("MensajeUsuario", fields: [usuarioId], references: [id])
+  usuarioId      String
+  conversacionId String
+  conversacion   ListConversacion @relation(fields: [conversacionId], references: [id])
+}
+
+model Image {
+  id        String  @id @default(cuid())
+  mimeType  String
+  sha256    String
+  message   Message @relation(fields: [messageId], references: [id])
+  messageId String  @unique
+}
+
+model Data {
+  id        String  @id @default(cuid())
+  text      String
+  message   Message @relation(fields: [messageId], references: [id])
+  messageId String  @unique
+}
+
+model ListConversacion {
+  id        String    @id @default(cuid())
+  llave     String    @unique
+  UsuarioId String
+  usuario   Usuario   @relation("ConversationUsuario", fields: [UsuarioId], references: [id])
+  mensajes  Message[]
+}
