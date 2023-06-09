@@ -31,7 +31,7 @@ import { createBot } from 'whatsapp-cloud-api';
     // you can verify the webhook URL and make the server publicly available
 
     await bot.startExpressServer({
-      webhookVerifyToken: 'my-verification-token',
+      webhookVerifyToken: webhookVerifyToken,
       port: 3000,
       webhookPath: `/custom/webhook`,
       useMiddleware: (app) => {
