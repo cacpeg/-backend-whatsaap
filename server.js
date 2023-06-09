@@ -44,16 +44,16 @@ async function main() {
     })
 
     const conversacion = await prisma.listConversacion.upsert({
-      where: { id: `${date.toLocaleDateString() + user.id.toString}` },
+      where: { id:  `${date.toLocaleDateString()+user.id}` },
       update: {},
       create: {
-        id: `${date.toLocaleDateString() + user.id.toString}`,
+        id:  `${date.toLocaleDateString()+user.id}`,
         llave: date.toLocaleDateString(),
         UsuarioId: user.id
       },
     })
 
-
+  
 
     console.log(date.toISOString()); // Imprime la fecha en formato ISO
     console.log(date.toLocaleDateString());
