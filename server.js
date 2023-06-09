@@ -33,7 +33,7 @@ async function main() {
   bot.on('message', async (msg) => {
     console.log(msg);
     const user = await prisma.usuario.upsert({
-      where: { llave: msg.from },
+      where: { telefono: msg.from },
       update: {},
       create: {
         nombre: msg.name,
