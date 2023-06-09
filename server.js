@@ -32,6 +32,8 @@ async function main() {
 
   bot.on('message', async (msg) => {
     console.log(msg);
+    const date = new Date();
+    date.setTime(msg.timestamp * 1000);
     const user = await prisma.usuario.upsert({
       where: { telefono: msg.from },
       update: {},
@@ -50,8 +52,7 @@ async function main() {
       },
     })
 
-    const date = new Date();
-    date.setTime(msg.timestamp * 1000);
+  
 
     console.log(date.toISOString()); // Imprime la fecha en formato ISO
     console.log(date.toLocaleDateString());
