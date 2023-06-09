@@ -16,7 +16,7 @@ await bot.startExpressServer({
   useMiddleware: (app) => {
     app.use(cors()),
     app.get("/apis",(req,res)=>{
-      bot.sendText("","")
+      res.send("Hola Mundo")
     })
   },
 });
